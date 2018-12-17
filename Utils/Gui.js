@@ -193,13 +193,23 @@
       texturaImagem = ficheiroTextura;
       //changeTexturaExterior(ficheiroTextura);
       //changeTexturaInterior(ficheiroTextura);
-    }
+    },
+      selectMatteEscuro: function () {
+          ficheiroTextura = texturaMatteEscuro;
+          texturaImagem = ficheiroTextura;
+      },
+      selectMatteClaro: function () {
+          ficheiroTextura = texturaMatteClaro;
+          texturaImagem = ficheiroTextura;
+      }
   };
 
   folderTexturas.add(selectsTextura, "selectComprensada").name("Comprensada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraCompressada + ')';
   folderTexturas.add(selectsTextura, "selectDetalhada").name("Detalhada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraDetalhada + ')';
   folderTexturas.add(selectsTextura, "selectClara").name("Clara").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraClara + ')';
   folderTexturas.add(selectsTextura, "selectEscura").name("Escura").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraEscura + ')';
+  folderTexturas.add(selectsTextura, "selectMatteEscuro").name("Matte Escuro").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMatteEscuro + ')';
+  folderTexturas.add(selectsTextura, "selectMatteClaro").name("Matte Claro").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMatteClaro + ')';
 
   folderTexturas.open();
 
