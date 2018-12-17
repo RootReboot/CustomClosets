@@ -58,6 +58,7 @@ function onDocumentMouseClick(event){
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObjects(listaSelectPartes);
 
+
   if ( intersects.length > 0 ) {
     var texture = new THREE.TextureLoader().load(texturaImagem);
     var material = new THREE.MeshLambertMaterial({
@@ -65,7 +66,6 @@ function onDocumentMouseClick(event){
         side: THREE.DoubleSide,
         alphaTest: 0.5
     });
-
     intersects[0].object.material=material;
     intersects[0].object.children.forEach(function(pChild){
       pChild.material=material;
@@ -75,29 +75,7 @@ function onDocumentMouseClick(event){
     listaSelectPartes.splice(index,1);
     listaSelectedPartes.push(intersects[0].object);
 
-    domEvents.addEventListener(intersects[0].object,'click', event =>{
-      var clickedObject=intersects[0].object;
-      if(!clickedObject.material.map.image.currentSrc.includes(texturaImagem)){
-        clickedObject.material.map = new THREE.TextureLoader().load(texturaImagem);
-      }else{
-        if(intersects[0].object.name==-10){
-          var degToRad = Math.PI / 180;
-          var targetAngle = clickedObject.rotation.y === -100 * degToRad
-          ? 0
-          : -100 * degToRad;
-
-          new TWEEN.Tween(clickedObject.rotation)
-          .easing(TWEEN.Easing.Circular.Out)
-          .to(
-            {
-            y: targetAngle
-            },
-            500
-          )
-          .start();
-          }
-      }
-    });
+  addEventListenerToParte(intersects[0].object);
     //-5 e apenas um modulo nao sendo necessario uma matrix,-10 e uma porta
     if(intersects[0].object.name!=-5 && intersects[0].object.name!=-10){
           listaOcupacaoPartes[intersects[0].object.name].push(intersects[0].object);
@@ -106,6 +84,49 @@ function onDocumentMouseClick(event){
         listaPortasMesh.push(intersects[0].object);
     }
   }
+}
+//button = leftClick,rightCLick,etc
+function addEventListenerToParte(part) {
+  domEvents.addEventListener(part,'click', function() {
+    var clickedObject=part;
+
+    if(!clickedObject.material.map.image.currentSrc.includes(texturaImagem)){
+      clickedObject.material.map = new THREE.TextureLoader().load(texturaImagem);
+    }else{
+      if(clickedObject.name==-10){
+        var degToRad = Math.PI / 180;
+        var targetAngle = clickedObject.rotation.y === -100 * degToRad
+        ? 0
+        : -100 * degToRad;
+
+        new TWEEN.Tween(clickedObject.rotation)
+        .easing(TWEEN.Easing.Circular.Out)
+        .to(
+          {
+          y: targetAngle
+          },
+          500
+        )
+        .start();
+        }
+    }
+  });
+
+  domEvents.addEventListener(part,'contextmenu',function() {
+    let index=listaSelectedPartes.indexOf(part);
+    listaSelectedPartes.splice(index,1);
+    if(part.name == -10) {
+      let indexPortas = listaPortasMesh.indexOf(part);
+      listaPortasMesh.splice(indexPortas,1);
+    }
+    if (part.name != -5 && part.name !=-10) {
+      let indexOcupacaoPartes = listaOcupacaoPartes[part.name].indexOf(part);
+      listaOcupacaoPartes[part.name].splice(indexOcupacaoPartes,1);
+    }
+    domEvents.removeEventListener(part,'click');
+    scene.remove(part);
+    domEvents.removeEventListener(part,'contextmenu');//apagase a si proprio
+  });
 }
 
   var INTERSECTED;

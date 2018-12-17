@@ -33,15 +33,7 @@
       clearCompleteModulos();
     },
     selectRetirarUltimoElemento: function () {
-      var meshRetirar = listaSelectedPartes.pop();
-      if(meshRetirar.name == -10){
-        listaPortasMesh.pop();
-      }
-      domEvents.removeEventListener(meshRetirar,'click');
-      if (meshRetirar.name != -5 && meshRetirar.name !=-10) {
-        listaOcupacaoPartes[meshRetirar.name].pop();
-      }
-      scene.remove(meshRetirar);
+      clearUltimoModulo();
     }
   };
 
@@ -255,12 +247,27 @@ function changeTexturaInterior(ficheiroTextura) {
   }
 }
 
+
+
 //Limpar Grids
 function clearModulos() {
   for (var i = 0; i < listaSelectPartes.length; i++) {
     scene.remove(listaSelectPartes[i]);
   }
   listaSelectPartes = [];
+}
+
+function clearUltimoModulo() {
+  var meshRetirar = listaSelectedPartes.pop();
+  if(meshRetirar.name == -10){
+    listaPortasMesh.pop();
+  }
+  domEvents.removeEventListener(meshRetirar,'click');
+  if (meshRetirar.name != -5 && meshRetirar.name !=-10) {
+    let index=listaOcupacaoPartes[meshRetirar.name].indexOf(meshRetirar);
+    listaOcupacaoPartes[meshRetirar.name].splice(index,1);
+  }
+  scene.remove(meshRetirar);
 }
 
 //Limpar todos os modulos
