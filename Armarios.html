@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>three.js webgl -Armarios stl</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			font-family: Monospace;
+			background-color: #000;
+			color: #fff;
+			margin: 0px;
+			overflow: hidden;
+		}
+
+		#info {
+			color: #fff;
+			position: absolute;
+			top: 10px;
+			width: 100%;
+			text-align: center;
+			display: block;
+		}
+
+		#info a {
+			color: #046;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="info">
+		<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a>
+	</div>
+	<script src="three.js-master/build/three.js"></script>
+	<script src="Init.js"></script>
+	<script src="Utils/Controls/OrbitControls.js"></script>
+	<script src="Utils/Librarys/stats.min.js"></script>
+	<script src="Utils/Librarys/dat.gui.min.js"></script>
+	<script src="Utils/Lights/LuzHemisferica.js"></script>
+	<script src="Utils/Lights/LuzDirecional.js"></script>
+	<script src="Utils/Lights/LuzCamera.js"></script>
+	<script src="Utils/Renderers/Renderer.js"></script>
+	<script src="Utils/Animations/Animate.js"></script>
+	<script src="Utils/Gui.js"></script>
+	<script src="Utils/WebGL.js"></script>
+	<script src="Models/Armario.js"></script>
+	<script src="Models/Chao.js"></script>
+	<script src="Models/Gaveta.js"></script>
+	<script src="Models/Porta.js"></script>
+	<script src="Models/Prateleira.js"></script>
+	<script src="Models/Cabide.js"></script>
+	<script src="Models/Divisoes.js"></script>
+	<script src="Models/Parte.js"></script>
+	<script src ="threex.domevents-master/threex.domevents.js"></script>
+	<script src="Utils/Tween.js"></script>
+
+
+
+	<script>
+		if (WEBGL.isWebGLAvailable() === false) {
+			document.body.appendChild(WEBGL.getWebGLErrorMessage());
+		}
+
+
+
+		var gui = new dat.GUI(),
+			scaleArmario = 2,
+			elementos = [],
+			params,
+			paramsModulo,
+			scene,
+			camera,
+			renderer,
+			exporter,
+
+			meshChao,
+			meshAtras,
+			meshEsquerda,
+			meshDireita,
+			meshBaixo,
+			meshCima,
+
+			texturaMadeiraEscura = 'Textures/textura_madeira_escura.jpg',
+			texturaMadeiraClara = 'Textures/textura_madeira_clara.jpg',
+			texturaMadeiraCompressada = 'Textures/compressed-but-large-wood-texture.jpg',
+			texturaMadeiraDetalhada = 'Textures/imagem.jpg',
+			texturaGranito = 'Textures/textura_granito.jpg',
+			texturaImagem = texturaMadeiraEscura,
+
+			hemiLight,
+			hemiLightHelper,
+
+			dirLight,
+			dirLightHelper,
+
+			scale,
+			controls,
+
+			altura = 150 * scaleArmario,
+			largura = 70 * scaleArmario,
+			comprimento = 100 * scaleArmario,
+			espessura = 3,
+
+			meshGavetaAtras,
+			meshGavetaFrente,
+			meshGavetaEsquerda,
+			meshGavetaDireita,
+			meshGavetaBaixo,
+			meshPuxadorPorta,
+			meshPuxadorGaveta,
+			meshModuloParticao,
+			meshPrateleira,
+			meshPorta,
+			meshCabide,
+			meshDivisao,
+			listMeshDivisao = [],
+			maxDivisao = 1,
+			valorMinimoDivisao = 50,
+			validacaoDivisao = 0,
+			comprimentoDivisao = comprimento,
+			comprimentoPorta = 100,
+			posicaoXDivisao = comprimentoDivisao,
+
+			alturaGaveta = 20 * scaleArmario,
+			alturaPrateleira = 20 * scaleArmario,
+			alturaCabide = 70 * scaleArmario,
+			alturaApresentacaoModulo = 150,		//apresentacaoModulo
+			distanciaModulo = 500,				//apresentacao do modulo
+			larguraModulo = largura,
+			comprimentoModulo = comprimentoDivisao,
+
+			raioPuxador = 10,
+			numDivisoes = 0,
+
+			listaSelectPartes = [],
+			listaSelectedPartes = [],
+			listaPortasMesh= [],
+			listaOcupacaoPartes = [];
+			var domEvents;
+
+		init();
+		animate();
+	</script>
+</body>
+
+</html>
