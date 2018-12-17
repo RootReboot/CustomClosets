@@ -45,12 +45,26 @@
     }
   };
 
+  var materialSelect = {
+    mat: texturaMadeiraEscura
+  };
+
   var safeAltura = 0;
   var safeComprimento = 0;
   var safeLargura = 0;
   var folder = gui.addFolder('Dimensoes Armario');
   var folder1 = gui.addFolder('Adicionar partes');
-  var folderTexturas = gui.addFolder('Texturas');
+  //var folderTexturas = gui.addFolder('Texturas');
+  //FoldersParaCadaMaterial;
+  let folderMateriais = gui.addFolder('Materiais');
+  folderMateriais.open();
+    let folderAglomerado = folderMateriais.addFolder('Aglomerado');
+    folderAglomerado.open();
+    let folderMadeira = folderMateriais.addFolder('Madeira');
+    folderMadeira.open();
+    let folderMetal = folderMateriais.addFolder('Metal');
+    folderMetal.open();
+  //
   var folderCamera = gui.addFolder('Camera');
   folderCamera.add(params,'CameraCentralizada');
   folderCamera.open();
@@ -168,52 +182,58 @@
   var ficheiroTextura;
 
 
-  //Texturas
+  //Materiais e Acabamentos
   var selectsTextura = {
-    selectComprensada: function () {
+    selectAglomerado: function () {
       ficheiroTextura = texturaMadeiraCompressada;
       texturaImagem = ficheiroTextura;
-      //changeTexturaExterior(ficheiroTextura);
-      //changeTexturaInterior(ficheiroTextura);
     },
-    selectDetalhada: function () {
+    selectAglomeradoVerniz: function () {
       ficheiroTextura = texturaMadeiraDetalhada;
       texturaImagem = ficheiroTextura;
-      //changeTexturaExterior(ficheiroTextura);
-      //changeTexturaInterior(ficheiroTextura);
     },
-    selectClara: function () {
+    selectMadeira: function () {
       ficheiroTextura = texturaMadeiraClara;
       texturaImagem = ficheiroTextura;
-      //changeTexturaExterior(ficheiroTextura);
-      //changeTexturaInterior(ficheiroTextura);
     },
-    selectEscura: function () {
+    selectMadeiraEnvernizado: function () {
       ficheiroTextura = texturaMadeiraEscura;
       texturaImagem = ficheiroTextura;
-      //changeTexturaExterior(ficheiroTextura);
-      //changeTexturaInterior(ficheiroTextura);
     },
-      selectMatteEscuro: function () {
-          ficheiroTextura = texturaMatteEscuro;
-          texturaImagem = ficheiroTextura;
-      },
-      selectMatteClaro: function () {
-          ficheiroTextura = texturaMatteClaro;
-          texturaImagem = ficheiroTextura;
-      }
+    selectMatteEscuro: function () {
+      ficheiroTextura = texturaMatteEscuro;
+      texturaImagem = ficheiroTextura;
+    },
+    selectMatteClaro: function () {
+      ficheiroTextura = texturaMatteClaro;
+      texturaImagem = ficheiroTextura;
+    },
+    selectMetal: function () {
+      ficheiroTextura = texturaMetal;
+      texturaImagem = ficheiroTextura;
+    }
   };
 
-  folderTexturas.add(selectsTextura, "selectComprensada").name("Comprensada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraCompressada + ')';
-  folderTexturas.add(selectsTextura, "selectDetalhada").name("Detalhada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraDetalhada + ')';
+  folderAglomerado.add(selectsTextura, "selectAglomerado").name("Natural").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraCompressada + ')';
+  folderAglomerado.add(selectsTextura, "selectAglomeradoVerniz").name("Envernizado").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraDetalhada + ')';
+
+  folderMadeira.add(selectsTextura, "selectMadeira").name("Natural").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraClara + ')';
+  folderMadeira.add(selectsTextura, "selectMadeiraEnvernizado").name("Envernizado").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraEscura + ')';
+  
+  folderMetal.add(selectsTextura, "selectMetal").name("Sem Acabamento").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMetal + ')';
+
+
+  /*folderTexturas.add(selectsTextura, "selectAglomerado").name("Comprensada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraCompressada + ')';
+  folderTexturas.add(selectsTextura, "selectAglomeradoVerniz").name("Detalhada").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraDetalhada + ')';
   folderTexturas.add(selectsTextura, "selectClara").name("Clara").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraClara + ')';
   folderTexturas.add(selectsTextura, "selectEscura").name("Escura").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraEscura + ')';
   folderTexturas.add(selectsTextura, "selectMatteEscuro").name("Matte Escuro").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMatteEscuro + ')';
-  folderTexturas.add(selectsTextura, "selectMatteClaro").name("Matte Claro").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMatteClaro + ')';
+  folderTexturas.add(selectsTextura, "selectMatteClaro").name("Matte Claro").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMatteClaro + ')';*/
 
-  folderTexturas.open();
+  //folderTexturas.open();
 
 }
+
 
 
 function changeTexturaExterior(ficheiroTextura) {
