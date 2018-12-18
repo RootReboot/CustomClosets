@@ -263,6 +263,7 @@ function clearUltimoModulo() {
     listaPortasMesh.pop();
   }
   domEvents.removeEventListener(meshRetirar,'click');
+  domEvents.removeEventListener(meshRetirar,'contextmenu');
   if (meshRetirar.name != -5 && meshRetirar.name !=-10) {
     let index=listaOcupacaoPartes[meshRetirar.name].indexOf(meshRetirar);
     listaOcupacaoPartes[meshRetirar.name].splice(index,1);
@@ -280,6 +281,7 @@ function clearCompleteModulos() {
   for (i = 0; i < listaSelectedPartes.length; i++) {
     scene.remove(listaSelectedPartes[i]);
     domEvents.removeEventListener(listaSelectedPartes[i],'click');
+    domEvents.removeEventListener(listaSelectedPartes[i],'contextmenu');
   }
 
   listaPortasMesh = [];
