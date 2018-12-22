@@ -105,6 +105,9 @@ function callArmarioInicial() {
       listMeshDivisao.forEach(function(element){
             element.material.map= new THREE.TextureLoader().load(texturaImagem);
       });
+      listMeshDivisaoHorizontal.forEach(function(element){
+        element.material.map= new THREE.TextureLoader().load(texturaImagem);
+      });
 
       }
   }
