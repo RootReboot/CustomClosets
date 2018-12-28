@@ -54,6 +54,7 @@
 	<script src="Models/Cabide.js"></script>
 	<script src="Models/Divisoes.js"></script>
 	<script src="Models/Parte.js"></script>
+	<script src="Models/PartesWithOption.js"></script>
 	<script src ="threex.domevents-master/threex.domevents.js"></script>
 	<script src="Utils/Tween.js"></script>
 
@@ -141,8 +142,11 @@
 			listaSelectPartes = [],
 			listaSelectedPartes = [],
 			listaPortasMesh= [],
+			listaSelectedPartesWithOptions = [],
 			listaOcupacaoPartes = [];
 			var domEvents;
+
+			var folderPartesOpcionais;
 
 
 			var listMaterial = [texturaMadeiraCompressada,texturaMadeiraDetalhada,texturaMadeiraClara];

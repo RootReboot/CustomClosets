@@ -30,7 +30,6 @@ function callConstrutorPorta(material, comprimentoStart,posicaoPuxador) {
   }
 
     scene.add(meshPorta);
-
 }
 
 function callGridPorta(comprimentoStart,posicaoPuxador) {

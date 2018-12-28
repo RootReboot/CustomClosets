@@ -44,9 +44,16 @@
   var safeAltura = 0;
   var safeComprimento = 0;
   var safeLargura = 0;
+
+  //Folders 
+  
+  //Folder para escolher dimensoes
   var folder = gui.addFolder('Dimensoes Armario');
+  
+  //Folder para adicionar partes
   var folder1 = gui.addFolder('Adicionar partes');
   //var folderTexturas = gui.addFolder('Texturas');
+  
   //FoldersParaCadaMaterial;
   let folderMateriais = gui.addFolder('Materiais');
   folderMateriais.open();
@@ -56,10 +63,18 @@
     folderMadeira.open();
     let folderMetal = folderMateriais.addFolder('Metal');
     folderMetal.open();
-  //
+
+  //Folder Camera
   var folderCamera = gui.addFolder('Camera');
   folderCamera.add(params,'CameraCentralizada');
   folderCamera.open();
+
+  //Folder Escolha PartesOpcionais
+  folderPartesOpcionais = gui.addFolder('Escolha Partes Opcionais');
+  folderPartesOpcionais.open();
+  
+
+  
 
 
   //Altura
@@ -167,7 +182,7 @@
   folder1.add(selects, "selectGaveta").name("Gaveta");
   folder1.add(selects, "selectPorta").name("Porta");
   folder1.add(selects, "selectPrateleira").name("Prateleira");
-  folder1.add(selects, "selectRetirarUltimoElemento").name("Retirar Ultimo Elemento");
+  //folder1.add(selects, "selectRetirarUltimoElemento").name("Retirar Ultimo Elemento");
   folder1.add(selects, "selectLimpar").name("Retirar Grids");
   folder1.add(selects, "selectLimparTudo").name("Limpar Modulos");
   folder.open();
@@ -283,6 +298,12 @@ function clearCompleteModulos() {
     domEvents.removeEventListener(listaSelectedPartes[i],'click');
     domEvents.removeEventListener(listaSelectedPartes[i],'contextmenu');
   }
+
+  for(let i = 0 ; i < listaSelectedPartesWithOptions.length ; i++){
+    folderPartesOpcionais.remove(listaSelectedPartesWithOptions[i].gui);
+  }
+  
+  listaSelectedPartesWithOptions=[];
 
   listaPortasMesh = [];
   listaSelectPartes = [];

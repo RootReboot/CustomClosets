@@ -75,6 +75,24 @@ function onDocumentMouseClick(event){
     listaSelectPartes.splice(index,1);
     listaSelectedPartes.push(intersects[0].object);
 
+    let parte = new PartesWithOption(intersects[0].object, false);
+    listaSelectedPartesWithOptions.push(parte);
+    let lengthListSelectedWithOptions = listaSelectedPartes.length; 
+    guiChangeOpcional.select=false;
+    parte.gui=folderPartesOpcionais.add(guiChangeOpcional,'select').name(`Parte`).onChange(function(option){
+      if(option == true) {
+        parte.parte.material.emissive = new THREE.Color( 0,1,0 );
+        parte.parte.material.emissiveIntensity=0.3;
+        parte.option=true;
+      }else{
+        parte.parte.material.emissive = new THREE.Color( 0, 0, 0 );
+        parte.parte.material.emissiveIntensity=1;
+        parte.option=false;
+      }
+      console.log(listaSelectedPartesWithOptions);
+    }.bind(parte));//Associa a parte a cada funcao
+
+
   addEventListenerToParte(intersects[0].object);
     //-5 e apenas um modulo nao sendo necessario uma matrix,-10 e uma porta
     if(intersects[0].object.name!=-5 && intersects[0].object.name!=-10){
@@ -124,6 +142,13 @@ function addEventListenerToParte(part) {
       listaOcupacaoPartes[part.name].splice(indexOcupacaoPartes,1);
     }
     domEvents.removeEventListener(part,'click');
+    for(let i = 0 ; i < listaSelectedPartesWithOptions.length ; i++){
+      if(listaSelectedPartesWithOptions[i].parte==part){
+        folderPartesOpcionais.remove(listaSelectedPartesWithOptions[i].gui);
+        listaSelectedPartesWithOptions.splice(i,1);
+        break;
+      }
+    } 
     scene.remove(part);
     domEvents.removeEventListener(part,'contextmenu');//apagase a si proprio
   });
@@ -159,3 +184,9 @@ function addEventListenerToParte(part) {
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
   }
+
+  var guiChangeOpcional = {
+    select : false
+  };
+
+   
