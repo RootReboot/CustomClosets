@@ -1,0 +1,5 @@
+node_modules/*
+typings/*
+package-lock.json
+package.json
+typings.json
