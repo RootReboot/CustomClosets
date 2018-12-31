@@ -54,6 +54,7 @@
 	<script src="Models/Cabide.js"></script>
 	<script src="Models/Divisoes.js"></script>
 	<script src="Models/Parte.js"></script>
+	<script src="Models/PartesWithOption.js"></script>
 	<script src ="threex.domevents-master/threex.domevents.js"></script>
 	<script src="Utils/Tween.js"></script>
 
@@ -119,13 +120,20 @@
 			meshPorta,
 			meshCabide,
 			meshDivisao,
+			meshDivisaoHorizontal,
 			listMeshDivisao = [],
+            listMeshDivisaoHorizontal = [],
 			maxDivisao = 1,
+			maxDivisaoHorizontal = 1,
 			valorMinimoDivisao = 50,
+            valorMinimoDivisaoHorizontal = 70,
 			validacaoDivisao = 0,
+			validacaoDivisaoHorizontal = 0,
 			comprimentoDivisao = comprimento,
 			comprimentoPorta = 100,
 			posicaoXDivisao = comprimentoDivisao,
+			alturaDivisaoHorizontal = altura,
+            posicaoYDivisaoHorizontal = alturaDivisaoHorizontal,
 
 			alturaGaveta = 20 * scaleArmario,
 			alturaPrateleira = 20 * scaleArmario,
@@ -137,12 +145,16 @@
 
 			raioPuxador = 10,
 			numDivisoes = 0,
+			numDivisoesHorizontais = 0,
 
 			listaSelectPartes = [],
 			listaSelectedPartes = [],
 			listaPortasMesh= [],
+			listaSelectedPartesWithOptions = [],
 			listaOcupacaoPartes = [];
 			var domEvents;
+
+			var folderPartesOpcionais;
 
 
 			var listMaterial = [texturaMadeiraCompressada,texturaMadeiraDetalhada,texturaMadeiraClara];

@@ -4,6 +4,7 @@
     comprimento: 100,
     largura: 70,
     nDivisao: 0,
+    nDivisaoHorizontal: 0,
     CameraCentralizada: function(){
       controls.reset();
     }
@@ -44,9 +45,16 @@
   var safeAltura = 0;
   var safeComprimento = 0;
   var safeLargura = 0;
+
+  //Folders 
+  
+  //Folder para escolher dimensoes
   var folder = gui.addFolder('Dimensoes Armario');
+  
+  //Folder para adicionar partes
   var folder1 = gui.addFolder('Adicionar partes');
   //var folderTexturas = gui.addFolder('Texturas');
+  
   //FoldersParaCadaMaterial;
   let folderMateriais = gui.addFolder('Materiais');
   folderMateriais.open();
@@ -56,10 +64,18 @@
     folderMadeira.open();
     let folderMetal = folderMateriais.addFolder('Metal');
     folderMetal.open();
-  //
+
+  //Folder Camera
   var folderCamera = gui.addFolder('Camera');
   folderCamera.add(params,'CameraCentralizada');
   folderCamera.open();
+
+  //Folder Escolha PartesOpcionais
+  folderPartesOpcionais = gui.addFolder('Escolha Partes Opcionais');
+  folderPartesOpcionais.open();
+  
+
+  
 
 
   //Altura
@@ -74,9 +90,14 @@
       meshCima.position.y = altura + espessura;
       meshAtras.geometry = new THREE.BoxGeometry(comprimento, altura, espessura);
       meshAtras.position.y = altura / 2 + espessura;
+      maxDivisaoHorizontal = (Math.floor(params.altura / valorMinimoDivisaoHorizontal)) - 1;
+      nDivisaoHorizontalFolder.max(maxDivisaoHorizontal);
       for (var i = 0; i < listMeshDivisao.length; i++) {
         listMeshDivisao[i].geometry = new THREE.BoxGeometry(largura, altura, espessura);
         listMeshDivisao[i].position.y = altura / 2 + espessura / 2;
+      }
+      for (var j = 0; j < listMeshDivisaoHorizontal.length; j++) {
+        scene.remove(listMeshDivisaoHorizontal[j]);
       }
     }
     safeAltura = params.altura;
@@ -99,6 +120,9 @@
       nDivisaoFolder.max(maxDivisao);
       for (var i = 0; i < listMeshDivisao.length; i++) {
         scene.remove(listMeshDivisao[i]);
+      }
+      for (var j = 0; j < listMeshDivisaoHorizontal.length; j++) {
+          listMeshDivisaoHorizontal[j].geometry = new THREE.BoxGeometry(comprimento - espessura * 2, largura, espessura);
       }
     }
     safeComprimento = params.comprimento;
@@ -123,13 +147,17 @@
         listMeshDivisao[i].geometry = new THREE.BoxGeometry(largura, altura, espessura);
         listMeshDivisao[i].position.z = -largura / 2 + espessura / 2;
       }
+      for (var j = 0; j < listMeshDivisaoHorizontal.length; j++) {
+          listMeshDivisaoHorizontal[j].geometry = new THREE.BoxGeometry(comprimento - espessura * 2, largura, espessura);
+          listMeshDivisaoHorizontal[j].position.z = - largura / 2 + espessura / 2;
+      }
     }
     safeLargura = params.largura;
   });
 
 
   //Num Divisoes
-  var nDivisaoFolder = folder.add(params, 'nDivisao').name('NºDivisórias').min(0).max(maxDivisao).onFinishChange(function () {
+  var nDivisaoFolder = folder.add(params, 'nDivisao').name('Nº Verticais').min(0).max(maxDivisao).onFinishChange(function () {
 
     numDivisoes = Math.round(params.nDivisao);
 
@@ -161,13 +189,40 @@
 
   }).listen();
 
+  var nDivisaoHorizontalFolder = folder.add(params, 'nDivisaoHorizontal').name('Nº Horizontais').min(0).max(maxDivisaoHorizontal).onFinishChange(function () {
+
+    numDivisoesHorizontais = Math.round(params.nDivisaoHorizontal);
+    if (validacaoDivisaoHorizontal != numDivisoesHorizontais) {
+        clearCompleteModulos();
+        listaOcupacaoPartes.push([]);
+
+        for (var q = 0; q < listMeshDivisaoHorizontal.length; q++) {
+            scene.remove(listMeshDivisaoHorizontal[q]);
+        }
+        alturaDivisaoHorizontal = altura;
+
+        if (numDivisoesHorizontais != 0) {
+            alturaDivisaoHorizontal = altura / (numDivisoesHorizontais + 1);
+            posicaoYDivisaoHorizontal = alturaDivisaoHorizontal;
+
+            for (var i = 0; i < numDivisoesHorizontais; i++) {
+                listaOcupacaoPartes.push([]);
+                criarDivisoesHorizontais();
+                posicaoYDivisaoHorizontal += alturaDivisaoHorizontal;
+            }
+            posicaoYDivisaoHorizontal = alturaDivisaoHorizontal;
+        }
+        validacaoDivisaoHorizontal = numDivisoesHorizontais;
+    }
+  }).listen();
+
 
   //Add Partes Whizard
   folder1.add(selects, "selectCabide").name("Cabide");
   folder1.add(selects, "selectGaveta").name("Gaveta");
   folder1.add(selects, "selectPorta").name("Porta");
   folder1.add(selects, "selectPrateleira").name("Prateleira");
-  folder1.add(selects, "selectRetirarUltimoElemento").name("Retirar Ultimo Elemento");
+  //folder1.add(selects, "selectRetirarUltimoElemento").name("Retirar Ultimo Elemento");
   folder1.add(selects, "selectLimpar").name("Retirar Grids");
   folder1.add(selects, "selectLimparTudo").name("Limpar Modulos");
   folder.open();
@@ -211,7 +266,7 @@
 
   folderMadeira.add(selectsTextura, "selectMadeira").name("Natural").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraClara + ')';
   folderMadeira.add(selectsTextura, "selectMadeiraEnvernizado").name("Envernizado").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMadeiraEscura + ')';
-  
+
   folderMetal.add(selectsTextura, "selectMetal").name("Sem Acabamento").domElement.previousSibling.style.backgroundImage = 'url(' + texturaMetal + ')';
 
 
@@ -283,6 +338,12 @@ function clearCompleteModulos() {
     domEvents.removeEventListener(listaSelectedPartes[i],'click');
     domEvents.removeEventListener(listaSelectedPartes[i],'contextmenu');
   }
+
+  for(let i = 0 ; i < listaSelectedPartesWithOptions.length ; i++){
+    folderPartesOpcionais.remove(listaSelectedPartesWithOptions[i].gui);
+  }
+  
+  listaSelectedPartesWithOptions=[];
 
   listaPortasMesh = [];
   listaSelectPartes = [];
