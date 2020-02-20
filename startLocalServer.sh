@@ -1,1 +1,1 @@
-php -S 127.0.0.1:4000
+./node_modules/.bin/http-server -a localhost -p 8000 -c-1
