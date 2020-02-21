@@ -3,7 +3,7 @@ Check project on https://rootreboot.github.io/CustomClosets/index
 
 ## Run Project Locally:
 
-Install the dependencies necessary to run the http project:
+Install the dependencies necessary to run the http server:
 
 `yarn install`
 
