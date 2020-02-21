@@ -1,6 +1,7 @@
 # Custom Closets
+Check project on https://rootreboot.github.io/CustomClosets/index
 
-## Run Project:
+## Run Project Locally:
 
 Install the dependencies necessary to run the http project:
 
@@ -31,3 +32,9 @@ Run the script file `startLocalServer.bat` and access the localhost:8000.
 **Delete a part:** - To remove a part the user must place the mouse over the desired part and right click.
 
 **Delete all parts:** - To remove all parts the user must click on the "Remover partes" option of the submenu _"Add parts"_.
+
+##Knowed Malfunctions
+*If there are 2 or more horizontals divisions, some grids to add parts overlap the divisions.*
+
+
+
