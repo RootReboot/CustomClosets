@@ -1,5 +1,5 @@
 # Custom Closets
-Check project on <a href="https://rootreboot.github.io/CustomClosets/index" target="_blank">https://rootreboot.github.io/CustomClosets/index</a>
+Check project on https://rootreboot.github.io/CustomClosets/index
 
 ## Run Project Locally:
 
