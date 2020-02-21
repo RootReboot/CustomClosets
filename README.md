@@ -33,7 +33,8 @@ Run the script file `startLocalServer.bat` and access the localhost:8000.
 
 **Delete all parts:** - To remove all parts the user must click on the "Remover partes" option of the submenu _"Add parts"_.
 
-##Knowed Malfunctions
+## Knowed Malfunctions
+
 *If there are 2 or more horizontals divisions, some grids to add parts overlap the divisions.*
 
 
