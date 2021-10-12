@@ -54,7 +54,7 @@
   "homepage": "https://threejs.org/",
   "devDependencies": {
     "concurrently": "^4.0.1",
-    "electron": "^2.0.8",
+    "electron": "^11.5.0",
     "eslint": "^5.5.0",
     "eslint-config-mdcs": "^4.2.3",
     "eslint-plugin-html": "^4.0.6",
